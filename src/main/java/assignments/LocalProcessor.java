@@ -24,6 +24,8 @@ public class LocalProcessor {
     private Scanner informationScanner;
     private List<String> stringArrayList;
 
+    private StringBuilder namesBuilder = new StringBuilder();
+
     private static final Logger logger = Logger.getLogger(LocalProcessor.class.getName());
 
     public LocalProcessor(String processorName, Long period, String processorVersion, Integer valueOfCheap,
@@ -45,8 +47,8 @@ public class LocalProcessor {
             throw new IllegalStateException("String list cannot be null or empty");
         }
 
-        stringArrayList = new LinkedList<>(stringList);
         try{
+            stringArrayList = new LinkedList<>(stringList);
             for (int i = 0; i < period; i++) {
                 logger.info(String.valueOf(stringArrayList.get(i).hashCode()));
             }
@@ -59,11 +61,11 @@ public class LocalProcessor {
 
     @FullNameProcessorGeneratorAnnotation
     public String fullNameProcessorGenerator(LinkedList<String> stringList) {
-        StringBuilder names = new StringBuilder();
+        namesBuilder.setLength(0);
         for (String string : stringList) {
-            names.append(string).append(" ");
+            namesBuilder.append(string).append(" ");
         }
-        processorName = names.toString();
+        processorName = namesBuilder.toString();
         return processorName;
     }
 
@@ -71,11 +73,11 @@ public class LocalProcessor {
     public void readFullProcessorName(File file) throws FileNotFoundException {
         try {
             informationScanner = new Scanner(file);
-            StringBuilder versions = new StringBuilder();
+            namesBuilder.setLength(0);
             while (informationScanner.hasNext()) {
-                versions.append(informationScanner.nextLine());
+                namesBuilder.append(informationScanner.nextLine());
             }
-            processorVersion = versions.toString();
+            processorVersion = namesBuilder.toString();
         } catch (FileNotFoundException e) {
             logger.severe("File not found: " + e.getMessage());
         } finally{
