@@ -22,7 +22,7 @@ public class LocalProcessor {
     private String processorVersion;
     private Integer valueOfCheap;
     private Scanner informationScanner;
-    private List<String> stringArrayList;
+    private LinkedList<String> stringArrayList = new LinkedList<>();
 
     private StringBuilder namesBuilder = new StringBuilder();
 
@@ -42,14 +42,22 @@ public class LocalProcessor {
     }
 
     @ListIteratorAnnotation
-    public void listIterator(LinkedList<String> stringList) {
+    public void listIterator(List<String> stringList) {
         if (stringList == null || stringList.isEmpty()) {
             throw new IllegalStateException("String list cannot be null or empty");
+        }
+        stringArrayList = new LinkedList<>(stringList);
+        if (period > stringArrayList.size()){
+            throw new IllegalStateException("Period is more than list size.");
         }
 
         for (String string : stringList) {
             logger.info(String.valueOf(string.hashCode()));
         }
+        /*stringArrayList = new LinkedList<>(stringList);
+        for (int i = 0; i < period; i++) {
+            System.out.println(stringArrayList.get(i).hashCode());
+        }*/
     }
 
     @FullNameProcessorGeneratorAnnotation
