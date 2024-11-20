@@ -49,11 +49,15 @@ public class LocalProcessor {
         stringArrayList = new LinkedList<>(stringList);
         if (period > stringArrayList.size()){
             for (String s : stringArrayList) {
-                logger.info(String.valueOf(s.hashCode()));
+                if (s!=null){
+                    logger.info(String.valueOf(s.hashCode()));
+                }
             }
         } else {
             for (int i = 0; i < period; i++) {
-                logger.info(String.valueOf(stringArrayList.get(i).hashCode()));
+                if (stringArrayList.get(i)!=null){
+                    logger.info(String.valueOf(stringArrayList.get(i).hashCode()));
+                }
             }
         }
     }
