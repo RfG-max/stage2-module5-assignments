@@ -47,12 +47,14 @@ public class LocalProcessor {
             throw new IllegalStateException("String list cannot be null or empty");
         }
         stringArrayList = new LinkedList<>(stringList);
-        if (period >= stringArrayList.size()){
-            throw new IllegalStateException("Period is more than list size.");
-        }
-
-        for (int i = 0; i < period; i++) {
-            logger.info(String.valueOf(stringArrayList.get(i).hashCode()));
+        if (period > stringArrayList.size()){
+            for (String s : stringArrayList) {
+                logger.info(String.valueOf(s.hashCode()));
+            }
+        } else {
+            for (int i = 0; i < period; i++) {
+                logger.info(String.valueOf(stringArrayList.get(i).hashCode()));
+            }
         }
     }
 
