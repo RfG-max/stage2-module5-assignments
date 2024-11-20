@@ -47,15 +47,8 @@ public class LocalProcessor {
             throw new IllegalStateException("String list cannot be null or empty");
         }
 
-        try{
-            stringArrayList = new LinkedList<>(stringList);
-            for (int i = 0; i < period; i++) {
-                logger.info(String.valueOf(stringArrayList.get(i).hashCode()));
-            }
-        } catch(IndexOutOfBoundsException e){
-            logger.severe(e.getMessage());
-        } catch (IllegalArgumentException e){
-            logger.severe(e.getMessage());
+        for (String string : stringList) {
+            logger.info(String.valueOf(string.hashCode()));
         }
     }
 
@@ -81,7 +74,9 @@ public class LocalProcessor {
         } catch (FileNotFoundException e) {
             logger.severe("File not found: " + e.getMessage());
         } finally{
-            informationScanner.close();
+            if (informationScanner != null) {
+                informationScanner.close();
+            }
         }
     }
 }
