@@ -6,6 +6,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Scanner;
 import java.util.logging.Logger;
+import java.lang.StringBuilder;
 
 import assignments.annotations.FullNameProcessorGeneratorAnnotation;
 import assignments.annotations.ListIteratorAnnotation;
@@ -40,12 +41,18 @@ public class LocalProcessor {
 
     @ListIteratorAnnotation
     public void listIterator(LinkedList<String> stringList) {
+        if (stringList == null || stringList.isEmpty()) {
+            throw new IllegalStateException("String list cannot be null or empty");
+        }
+
         stringArrayList = new LinkedList<>(stringList);
         try{
             for (int i = 0; i < period; i++) {
                 logger.info(String.valueOf(stringArrayList.get(i).hashCode()));
             }
         } catch(IndexOutOfBoundsException e){
+            logger.severe(e.getMessage());
+        } catch (IllegalArgumentException e){
             logger.severe(e.getMessage());
         }
     }
@@ -71,6 +78,8 @@ public class LocalProcessor {
             processorVersion = versions.toString();
         } catch (FileNotFoundException e) {
             logger.severe("File not found: " + e.getMessage());
+        } finally{
+            informationScanner.close();
         }
     }
 }
